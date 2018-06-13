@@ -1,0 +1,23 @@
+//Main sass config files
+@import "root/style-infos";
+@import "root/mixins";
+@import "root/variables";
+
+//Main websites components
+@import "components/text";
+
+// Vendor
+@import "vendor/selectbox";
+
+//Main websites patterns
+@import "patterns/utilities";
+@import "patterns/header";
+@import "patterns/footer";
+@import "patterns/entries";
+@import "patterns/sliders";
+
+//Pages
+@import "pages/events";
+@import "pages/manifests";
+@import "pages/team";
+@import "pages/startups";
