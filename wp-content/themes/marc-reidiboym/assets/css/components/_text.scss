@@ -1,0 +1,21 @@
+/* Font face
+----------------------------------------------------------------------------------------------------*/
+@include declare-font-face("Neuzeit Grotesk", "#{$fonts-url}/NeuzeitGrotesk/Neuzeit-GroT"); //regularx400
+@include declare-font-face("Neuzeit Grotesk", "#{$fonts-url}/NeuzeitGrotesk/NeuzeitSHeavy-Book", 700); //boldx700
+
+/* Global
+----------------------------------------------------------------------------------------------------*/
+body {
+    font-family: $customfont-1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings
+----------------------------------------------------------------------------------------------------*/
+@for $i from 1 through 6 {
+    h#{$i} {
+        font-family: $customfont-1;
+        font-weight: 700;
+    }
+}

@@ -1,0 +1,26 @@
+/* WP Bakery / Visual Composer
+----------------------------------------------------------------------------------------------------*/
+.btn-primary {
+    text-transform: none;
+    font-weight: 300;
+}
+.ba-button {
+    &.classic {
+        a {
+            height: 46px;
+            padding: 0 20px;
+            line-height: 46px;
+            i {
+                margin-left: 5px;
+                font-size: 16px;
+            }
+        }
+    }
+}
+
+.wpb_text_column {
+    p {
+        line-height: 23px;
+        font-size: 18px;
+    }
+}

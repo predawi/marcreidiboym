@@ -24,8 +24,6 @@ gulp.task('imagemin', getTask('imagemin'))
 gulp.task('build', ['imagemin', 'favicon', 'js', 'sass'])
 
 // On default task, just compile on demand
-gulp.task('default', ['js', 'sass'], function () {
-  gulp.watch('assets/js/src/*.js', [ 'js' ])
-  gulp.watch('assets/js/vendor/*.js', [ 'js' ])
+gulp.task('default', ['sass'], function () {
   gulp.watch(['assets/css/*.scss', 'assets/css/**/*.scss'], ['sass'])
 })

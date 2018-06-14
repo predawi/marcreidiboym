@@ -1,3 +1,8 @@
+$maincolor: #333;
+$altcolor: #eee;
+
+$customfont-1: "Neuzeit Grotesk", sans-serif;
+
 //Breakpoint
 $mobile-small: em(480);
 $mobile-medium: em(481);
@@ -6,7 +11,3 @@ $tablet-medium: em(768);
 $desktop-small: em(1024);
 $desktop-medium: em(1260);
 
-$maincolor: #46db77;
-$altcolor: #ffeb64;
-$altcolor2: #00e6dc;
-$textcolor: #303030;
