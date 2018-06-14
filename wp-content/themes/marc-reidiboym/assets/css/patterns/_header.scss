@@ -1,4 +1,33 @@
+/* Header
+----------------------------------------------------------------------------------------------------*/
 a.logo img {
     max-width: 260px;
     height: auto;
+}
+
+// Menu
+.site-header {
+    .header-main {
+        justify-content: space-between;
+    }
+}
+.second-el {
+    flex-grow: 0;
+}
+.menu-area {
+    ul {
+        &.menu {
+            &>li {
+                a {
+                    font-size: 18px;
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+}
+.site-menu {
+    @media screen and (min-width: $desktop-small) {
+        display: none;
+    }
 }
