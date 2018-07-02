@@ -6,3 +6,26 @@
     background-position: 150% top;
     background-size: 928px 538px;
 }
+.ba-image-box {
+    overflow: hidden;
+    img {
+        transition: all .6s ease-in-out;
+    }
+
+    h3 {
+        a {
+            transition: all .3s ease-in-out;
+        }
+    }
+
+    &:hover {
+        img {
+            transform: scale(1.1);
+        }
+        h3 {
+            a {
+                color: $maincolor;
+            }
+        }
+    }
+}
