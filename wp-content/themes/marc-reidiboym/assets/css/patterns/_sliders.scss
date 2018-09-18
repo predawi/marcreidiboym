@@ -13,7 +13,6 @@
         background: rgba(0,0,0,0.3);
     }
 }
-
 .rev_slider .tp-mask-wrap .tp-caption {
     font-family: $customfont-1 !important;
 }
@@ -39,6 +38,7 @@
 }
 
 .baroque-tabs {
+    display: none;
     .tp-tab-number {
         line-height: 26px;
         font-size: 18px;
