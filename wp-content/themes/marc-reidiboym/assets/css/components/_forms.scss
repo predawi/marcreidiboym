@@ -1,0 +1,23 @@
+.wpcf7-form  {
+    input[type="text"],
+    input[type="email"],
+    input[type="url"],
+    textarea,
+    select {
+        height: 55px;
+        line-height: 55px;
+        font-size: 26px;
+        &:focus,
+        &:hover {
+            border-bottom-color: $maincolor;
+        }
+    }
+    .wpcf7-submit {
+        text-transform: none;
+        font-weight: 300;
+        transition: all .3s ease-in-out;
+        @include hover {
+            background: $maincolor;
+        }
+    }
+}
