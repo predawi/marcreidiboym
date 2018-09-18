@@ -1,7 +1,22 @@
 /* Archives
 ----------------------------------------------------------------------------------------------------*/
-.page-header {
-    &__surtitle {
-
+.portfolio-list {
+    .page-header {
+        text-align: left;
+        &__surtitle {
+            display: block;
+            margin-bottom: 35px;
+        }
+    }
+}
+.blog-wrapper {
+    .entry-thumbnail {
+        .blog-thumb {
+            img {
+                width: 50%;
+                margin: auto;
+                display: block;
+            }
+        }
     }
 }

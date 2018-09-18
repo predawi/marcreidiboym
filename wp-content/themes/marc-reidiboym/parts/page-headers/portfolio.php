@@ -14,8 +14,8 @@ if ( $p_style == 'parallax' || $p_style == 'carousel' || $p_style == 'masonry' )
 <div class="page-header portfolio-page-header">
 	<div class="container">
 		<?php
-		if( the_archive_title() == 'Projets' ) {
-			echo '<span class="page-header__surtitle">Réalisations</span>'
+		if( get_the_archive_title() == 'Projets' ) {
+			echo '<span class="page-header__surtitle">Réalisations</span>';
 		}
 		the_archive_title( '<h1>', '</h1>' );
 		?>
