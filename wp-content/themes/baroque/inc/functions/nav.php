@@ -342,9 +342,9 @@ function baroque_single_portfolio_nav() {
 
 
 
-	$next_icon = '<span>' . esc_html__( 'Next', 'baroque' ) . '</span><i class="icon-arrow-right"></i>';
+	$next_icon = '<span>' . esc_html__( 'Suivant', 'baroque' ) . '</span><i class="icon-arrow-right"></i>';
 
-	$prev_icon = '<i class="icon-arrow-left"></i><span>' . esc_html__( 'Prev', 'baroque' ) . '</span>';
+	$prev_icon = '<i class="icon-arrow-left"></i><span>' . esc_html__( 'Précédent', 'baroque' ) . '</span>';
 
 
 
