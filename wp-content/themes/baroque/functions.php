@@ -20,6 +20,10 @@ function baroque_setup() {
 	// Make theme available for translation.
 	load_theme_textdomain( 'baroque', get_template_directory() . '/lang' );
 
+	add_theme_support( 'customize-selective-refresh-widgets' );
+
+
+
 	// Supports WooCommerce plugin.
 	add_theme_support( 'woocommerce' );
 
@@ -41,7 +45,26 @@ function baroque_setup() {
 	 * This theme styles the visual editor to resemble the theme style,
 	 * specifically font, colors.
  	 */
-	add_editor_style( array( 'css/editor-style.css' ) );
+	add_theme_support( 'customize-selective-refresh-widgets' );
+
+	if( baroque_fonts_url() ) {
+		add_editor_style( array( 'css/editor-style.css', baroque_fonts_url(), get_template_directory_uri() . '/css/eleganticons.min.css') );
+	} else {
+		add_editor_style( 'css/editor-style.css' );
+	}
+
+	// Load regular editor styles into the new block-based editor.
+	add_theme_support( 'editor-styles' );
+
+	// Load default block styles.
+	add_theme_support( 'wp-block-styles' );
+
+	// Add support for responsive embeds.
+	add_theme_support( 'responsive-embeds' );
+
+	add_theme_support( 'align-wide' );
+
+	add_theme_support( 'align-full' );
 
 	$image_sizes = baroque_get_option( 'image_sizes_default' );
 
@@ -63,7 +86,7 @@ function baroque_setup() {
 	// Add image size
 	add_image_size( 'baroque-portfolio-single', 1880, 850, true );
 	if ( in_array( 'portfolio_single_2', $image_sizes ) ) {
-		add_image_size( 'baroque-portfolio-single-2', 1405, 880, true );
+		add_image_size( 'baroque-portfolio-single-2', 1405, 10000, false );
 	}
 	if ( in_array( 'portfolio_carousel', $image_sizes ) || in_array( 'portfolio_masonry', $image_sizes ) || in_array( 'portfolio_metro', $image_sizes ) ) {
 		add_image_size( 'baroque-portfolio-carousel', 755, 755, true );
@@ -147,8 +170,22 @@ add_action( 'widgets_init', 'baroque_register_sidebar' );
  * Load theme
  */
 
-// Widgets
-require get_template_directory() . '/inc/widgets/widgets.php';
+// Frontend functions and shortcodes
+require get_template_directory() . '/inc/functions/media.php';
+require get_template_directory() . '/inc/functions/nav.php';
+require get_template_directory() . '/inc/functions/entry.php';
+require get_template_directory() . '/inc/functions/header.php';
+require get_template_directory() . '/inc/functions/comments.php';
+require get_template_directory() . '/inc/functions/options.php';
+require get_template_directory() . '/inc/functions/breadcrumbs.php';
+
+// Frontend hooks
+require get_template_directory() . '/inc/frontend/layout.php';
+require get_template_directory() . '/inc/frontend/header.php';
+require get_template_directory() . '/inc/frontend/footer.php';
+require get_template_directory() . '/inc/frontend/nav.php';
+require get_template_directory() . '/inc/frontend/entry.php';
+require get_template_directory() . '/inc/mega-menu/class-mega-menu-walker.php';
 
 // Customizer
 require get_template_directory() . '/inc/backend/customizer.php';
@@ -162,21 +199,5 @@ if ( is_admin() ) {
 	require get_template_directory() . '/inc/backend/plugins.php';
 	require get_template_directory() . '/inc/backend/meta-boxes.php';
 	require get_template_directory() . '/inc/mega-menu/class-mega-menu.php';
-} else {
-	// Frontend functions and shortcodes
-	require get_template_directory() . '/inc/functions/media.php';
-	require get_template_directory() . '/inc/functions/nav.php';
-	require get_template_directory() . '/inc/functions/entry.php';
-	require get_template_directory() . '/inc/functions/header.php';
-	require get_template_directory() . '/inc/functions/comments.php';
-	require get_template_directory() . '/inc/functions/options.php';
-	require get_template_directory() . '/inc/functions/breadcrumbs.php';
-
-	// Frontend hooks
-	require get_template_directory() . '/inc/frontend/layout.php';
-	require get_template_directory() . '/inc/frontend/header.php';
-	require get_template_directory() . '/inc/frontend/footer.php';
-	require get_template_directory() . '/inc/frontend/nav.php';
-	require get_template_directory() . '/inc/frontend/entry.php';
-	require get_template_directory() . '/inc/mega-menu/class-mega-menu-walker.php';
-}
+	require get_template_directory() . '/inc/backend/editor.php';
+}

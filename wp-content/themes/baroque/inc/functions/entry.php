@@ -24,15 +24,15 @@ function baroque_entry_footer() {
 
 
 	echo '<footer class="entry-footer">' .
-	     '<div class="container">' .
-	     '<div class="row">' .
-	     '<div class="col-md-' . esc_attr( $col ) . ' col-xs-12 col-sm-12 ' . $colOffset . '">';
+		'<div class="container">' .
+		'<div class="row">' .
+		'<div class="col-md-' . esc_attr( $col ) . ' col-xs-12 col-sm-12 ' . $colOffset . '">';
 
 	if ( has_tag() ) :
 		the_tags( '<div class="tag-list"><span class="tag-title">' . esc_html__( 'Tags: ', 'baroque' ) . '</span>', ', ', '</div>' );
 	endif;
 
-	if ( function_exists('baroque_addons_share_link_socials') && intval( baroque_get_option( 'show_post_social_share' ) ) ) {
+	if ( function_exists( 'baroque_addons_share_link_socials' ) && intval( baroque_get_option( 'show_post_social_share' ) ) ) {
 		echo '<div class="baroque-single-post-socials-share">';
 		echo baroque_addons_share_link_socials( get_the_title(), get_the_permalink(), get_the_post_thumbnail() );
 		echo '</div>';
@@ -111,9 +111,17 @@ function baroque_entry_thumbnail( $size = 'thumbnail' ) {
 				$html .= '<div class="single-image">' . $thumb . '</div>';
 			} else {
 				foreach ( $images as $image ) {
-					$thumb = wp_get_attachment_image( $image, $size );
+					$thumb = wp_get_attachment_image_src( $image, $size );
 					if ( $thumb ) {
-						$gallery[] = sprintf( '<div class="item-gallery">%s</div>', $thumb );
+						$gallery[] = sprintf(
+							'<div class="item-gallery">
+								<a href="%s" class="photoswipe" data-large_image_width="%s" data-large_image_height="%s"><img src="%s" alt="post-gallery"/></a>
+							</div>',
+							$thumb[0],
+							$thumb[1],
+							$thumb[2],
+							$thumb[0]
+						);
 					}
 				}
 
@@ -383,7 +391,7 @@ function baroque_rating_stars( $score ) {
 	$half_star = $score % 2;
 	$stars     = array();
 
-	for ( $i = 1; $i <= 5; $i++ ) {
+	for ( $i = 1; $i <= 5; $i ++ ) {
 		if ( $i <= $full_star ) {
 			$stars[] = '<i class="fa fa-star"></i>';
 		} elseif ( $half_star ) {
@@ -438,7 +446,7 @@ endif;
 
 if ( ! function_exists( 'baroque_is_portfolio' ) ) :
 	function baroque_is_portfolio() {
-		if ( is_post_type_archive( 'portfolio' ) || is_tax( 'portfolio_category' ) ) {
+		if ( is_post_type_archive( 'portfolio' ) || is_tax( 'portfolio_category' ) || is_tax( 'portfolio_tag' ) ) {
 			return true;
 		}
 
@@ -471,7 +479,7 @@ endif;
 if ( ! function_exists( 'baroque_is_homepage' ) ) :
 	function baroque_is_homepage() {
 		if ( is_page_template( 'template-home-boxed.php' ) ||
-		     is_page_template( 'template-homepage.php' )
+			is_page_template( 'template-homepage.php' )
 		) {
 			return true;
 		}
@@ -490,9 +498,9 @@ endif;
 if ( ! function_exists( 'baroque_is_page_template' ) ) :
 	function baroque_is_page_template() {
 		if ( is_page_template( 'template-home-boxed.php' ) ||
-		     is_page_template( 'template-fullwidth.php' ) ||
-		     is_page_template( 'template-coming-soon-page.php' ) ||
-		     is_page_template( 'template-homepage.php' )
+			is_page_template( 'template-fullwidth.php' ) ||
+			is_page_template( 'template-coming-soon-page.php' ) ||
+			is_page_template( 'template-homepage.php' )
 		) {
 			return true;
 		}
@@ -674,6 +682,12 @@ endif;
 
 if ( ! function_exists( 'baroque_portfolio_meta' ) ) :
 	function baroque_portfolio_meta() {
+		$portfolio_meta = baroque_get_option( 'single_portfolio_meta' );
+
+		if ( ! intval( $portfolio_meta ) ) {
+			return;
+		}
+
 		$client_text     = baroque_get_option( 'single_portfolio_client_text' );
 		$location_text   = baroque_get_option( 'single_portfolio_location_text' );
 		$completion_text = baroque_get_option( 'single_portfolio_completion_text' );
@@ -684,6 +698,7 @@ if ( ! function_exists( 'baroque_portfolio_meta' ) ) :
 		$completion = get_post_meta( get_the_ID(), 'completion', true );
 		$area       = get_post_meta( get_the_ID(), 'area', true );
 		$categories = get_the_terms( get_the_ID(), 'portfolio_category' );
+		$tags       = get_the_terms( get_the_ID(), 'portfolio_tag' );
 
 		$portfolio_layout = baroque_get_option( 'single_portfolio_layout' );
 
@@ -709,8 +724,21 @@ if ( ! function_exists( 'baroque_portfolio_meta' ) ) :
 
 			$output[] = sprintf(
 				'<div class="meta cat"><h5>%s</h5><div class="portfolio-cat">%s</div></div>',
-				esc_html__( 'CATEGORIES', 'baroque' ),
+				apply_filters( 'ba_portfolio_meta_categories_label', esc_html__( 'CATEGORIES', 'baroque' ) ),
 				implode( ',', $cats )
+			);
+		}
+
+		if ( ! is_wp_error( $tags ) && $tags ) {
+			$t = array();
+			foreach ( $tags as $tag ) {
+				$t[] = sprintf( '<a href="%s">%s</a>', esc_url( get_term_link( $tag ) ), esc_html( $tag->name ) );
+			}
+
+			$output[] = sprintf(
+				'<div class="meta tag"><h5>%s</h5><div class="portfolio-tag">%s</div></div>',
+				apply_filters( 'ba_portfolio_meta_tags_label', esc_html__( 'TAGS', 'baroque' ) ),
+				implode( ',', $t )
 			);
 		}
 
@@ -738,18 +766,19 @@ if ( ! function_exists( 'baroque_portfolio_meta' ) ) :
 			);
 		}
 
-		if ( intval(baroque_get_option( 'show_portfolio_social_share' )) && $portfolio_layout != '4' ) {
-			if( function_exists('baroque_addons_share_link_socials') ) {
+		if ( intval( baroque_get_option( 'show_portfolio_social_share' ) ) && $portfolio_layout != '4' ) {
+			if ( function_exists( 'baroque_addons_share_link_socials' ) ) {
 				$output[] = sprintf(
 					'<div class="meta socials"><h5>%s</h5>%s</div>',
-					esc_html__( 'SHARE', 'baroque' ),
+					apply_filters( 'ba_portfolio_meta_socials_label', esc_html__( 'SHARE', 'baroque' ) ),
 					baroque_addons_share_link_socials( get_the_title(), get_the_permalink(), get_the_post_thumbnail() )
 				);
 			}
-
 		}
 
 		$meta_html = '';
+
+		$output = ( array ) apply_filters( 'baroque_portfolio_meta', $output );
 
 		if ( ! empty( $output ) ) {
 			$meta_html = sprintf( '<div class="portfolio-meta">%s</div>', implode( '', $output ) );

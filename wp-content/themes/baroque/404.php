@@ -2,7 +2,7 @@
 /**
  * The template for displaying 404 pages (Not Found).
  *
- * @package Martfury
+ * @package Baroque
  */
 
 get_header();
@@ -20,7 +20,7 @@ if ( ! $img ) {
 
 		<section class="error-404 not-found">
 			<div class="page-content col-md-12 col-xs-12 col-sm-12">
-				<?php printf( '<img src="%s" alt="%s">', esc_url($img), esc_attr__('page not found', 'baroque')); ?>
+				<?php printf( '<img src="%s" alt="%s">', esc_url( $img ), esc_attr__( 'page not found', 'baroque' ) ); ?>
 
 				<h3 class="page-title"><?php esc_html_e( 'ohh! page not found', 'baroque' ); ?></h3>
 

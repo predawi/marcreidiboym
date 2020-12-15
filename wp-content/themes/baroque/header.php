@@ -17,9 +17,15 @@
 </head>
 
 <body <?php body_class(); ?>>
+<?php baroque_body_open(); ?>
 <div id="page" class="hfeed site">
 
-	<?php do_action( 'baroque_before_header' ); ?>
+	<?php
+	/*
+	 *	baroque_header_video
+	 */
+	do_action( 'baroque_before_header' );
+	?>
 
 	<header id="masthead" class="site-header">
 		<?php do_action( 'baroque_header' ); ?>

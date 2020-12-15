@@ -306,9 +306,9 @@ function baroque_post_nav() {
 
 			<?php
 
-			previous_post_link( '<div class="nav-previous">%link</div>', _x( '<span class="meta-nav"><i class="fa fa-chevron-left" aria-hidden="true"></i></span>' . esc_html__( 'Précédent', 'baroque' ), 'Previous post link', 'baroque' ) );
+			previous_post_link( '<div class="nav-previous">%link</div>', _x( '<span class="meta-nav"><i class="fa fa-chevron-left" aria-hidden="true"></i></span>' . esc_html__( 'Prev', 'baroque' ), 'Previous post link', 'baroque' ) );
 
-			next_post_link(     '<div class="nav-next">%link</div>',     _x( esc_html__( 'Suivant', 'baroque' ) . '<span class="meta-nav"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>', 'Next post link', 'baroque' ) );
+			next_post_link(     '<div class="nav-next">%link</div>',     _x( esc_html__( 'Next', 'baroque' ) . '<span class="meta-nav"><i class="fa fa-chevron-right" aria-hidden="true"></i></span>', 'Next post link', 'baroque' ) );
 
 			?>
 
@@ -370,6 +370,28 @@ function baroque_single_portfolio_nav() {
 
 
 
+	$url = get_post_type_archive_link( 'portfolio' );
+
+	$text = esc_html__('Tous les projets', 'baroque');
+
+
+
+	if ( ! empty(baroque_get_option( 'single_portfolio_nav_url' )) ) {
+
+		$url = baroque_get_option( 'single_portfolio_nav_url' );
+
+	}
+
+
+
+	if ( ! empty(baroque_get_option( 'single_portfolio_nav_text' )) ) {
+
+		$text = baroque_get_option( 'single_portfolio_nav_text' );
+
+	}
+
+
+
 	?>
 
 	<nav class="navigation portfolio-navigation">
@@ -386,7 +408,7 @@ function baroque_single_portfolio_nav() {
 
 
 
-				<a class="portfolio-link" href="<?php echo esc_url( get_post_type_archive_link( 'portfolio' ) ); ?>"><?php esc_html_e( 'Tous les projets', 'baroque' ); ?></a>
+				<a class="portfolio-link" href="<?php echo esc_url( $url ); ?>"><?php echo '' . $text; ?></a>
 
 
 
@@ -424,9 +446,31 @@ function baroque_single_service_nav() {
 
 
 
-	$next_icon = '<span>' . esc_html__( 'Next', 'baroque' ) . '</span><i class="icon-arrow-right"></i>';
+	$next_icon = '<span>' . esc_html__( 'Suivant', 'baroque' ) . '</span><i class="icon-arrow-right"></i>';
 
-	$prev_icon = '<i class="icon-arrow-left"></i><span>' . esc_html__( 'Prev', 'baroque' ) . '</span>';
+	$prev_icon = '<i class="icon-arrow-left"></i><span>' . esc_html__( 'Précédent', 'baroque' ) . '</span>';
+
+
+
+	$url = get_post_type_archive_link( 'service' );
+
+	$text = esc_html__('All Services', 'baroque');
+
+
+
+	if ( ! empty(baroque_get_option( 'single_service_nav_url' )) ) {
+
+		$url = baroque_get_option( 'single_service_nav_url' );
+
+	}
+
+
+
+	if ( ! empty(baroque_get_option( 'single_service_nav_text' )) ) {
+
+		$text = baroque_get_option( 'single_service_nav_text' );
+
+	}
 
 
 
@@ -446,7 +490,7 @@ function baroque_single_service_nav() {
 
 
 
-				<a class="portfolio-link" href="<?php echo esc_url( get_post_type_archive_link( 'service' ) ); ?>"><?php esc_html_e( 'All Services', 'baroque' ); ?></a>
+				<a class="portfolio-link" href="<?php echo esc_url( $url ); ?>"><?php echo '' . $text; ?></a>
 
 
 
